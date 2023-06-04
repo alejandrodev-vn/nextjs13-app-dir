@@ -25,7 +25,7 @@ export default function RootLayout({
   params: { lang: string }
 }) {
   return (
-    <html lang={params.lang} className="dark test">
+    <html lang={params.lang} className="dark">
       <Providers>
         <body
           className={`${fontMontserrat.className} overflow-y-scroll bg-white bg-[url('/grid.svg')] text-black dark:bg-black dark:text-white`}

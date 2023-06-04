@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang={params.lang} className="dark">
       <Providers>
         <body
-          className={`${fontMontserrat.className} overflow-y-scroll bg-white bg-[url('/grid.svg')] text-black dark:bg-black dark:text-white`}
+          className={`${fontMontserrat.className} overflow-y-scroll bg-white bg-[url('/images/grid.svg')] text-black dark:bg-black dark:text-white`}
         >
           <ThemeProvider>
             <MuiThemeProvider>

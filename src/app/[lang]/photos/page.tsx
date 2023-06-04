@@ -24,10 +24,11 @@ export default async function Page({ params }: { params: { lang: Locale } }) {
   const data = await fetchUsers()
 
   // const data = await res.json()
+
   return (
     <div className="space-y-8">
       <h1 className="text-xl font-medium text-gray-300">
-        {/* {dictionary['photos']} */}
+        {dictionary['photos']}
       </h1>
 
       <div className="space-y-10 text-white">

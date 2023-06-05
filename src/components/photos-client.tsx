@@ -9,12 +9,10 @@ const PhotosClientComponent = () => {
   const fetcher: Fetcher = (...args: Parameters<typeof fetch>) =>
     fetch(...args).then((res) => res.json())
 
-  const { data, error, isLoading }: any = useSWR(
-    'https://reqres.in/api/users?page=2',
-    fetcher,
-  )
+  const { data, error, isLoading }: any = useSWR('/api/users', fetcher, {
+    refreshInterval: 10000,
+  })
   //   const { data, error, isLoading }: any = useSWR('user/1', fetcher)
-
   if (error) {
     return (
       <div className="space-y-[20px]">

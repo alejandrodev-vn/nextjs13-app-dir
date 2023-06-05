@@ -1,29 +1,13 @@
-import PhotosClientComponent from '@components/photos-client'
-import { SkeletonCard } from '@components/skeleton-card'
 import { getDictionary } from '@get-dictionary'
-import clsx from 'clsx'
-import Link from 'next/link'
 import { Locale } from '@i18n-config'
-
-async function fetchUsers() {
-  try {
-    const res = await fetch(`https://reqres.in/api/users`, {
-      cache: 'no-store',
-    })
-    if (!res?.ok) return undefined
-    const data = await res.json()
-    return data.data
-  } catch (error) {
-    return undefined
-  }
-}
+import { Suspense } from 'react'
+import Loading from './loading'
+import { PhotosSSR } from '@components/photos-ssr'
+import { PhotosSSRDelay } from '@components/photos-ssr-delay'
+import PhotosClientComponent from '@components/photos-client'
 
 export default async function Page({ params }: { params: { lang: Locale } }) {
   const dictionary = await getDictionary(params.lang) // en
-
-  const data = await fetchUsers()
-
-  // const data = await res.json()
 
   return (
     <div className="space-y-8">
@@ -33,21 +17,21 @@ export default async function Page({ params }: { params: { lang: Locale } }) {
 
       <div className="space-y-10 text-white">
         <span>Here is already fetch from Server</span>
-        <div className="grid grid-cols-3 gap-[20px]">
-          {data.map((item: any) => (
-            <Link
-              href={`/photos/${item.id}`}
-              key={item.id}
-              className={clsx('rounded-2xl bg-gray-900/80 p-4')}
-            >
-              <div className="space-y-3">
-                <div className="h-14 rounded-lg">{item?.id}</div>
-                <div className="h-3 w-11/12 rounded-lg">{item.first_name}</div>
-                <div className="h-3 w-8/12 rounded-lg">{item.email}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <Suspense fallback={<Loading />}>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {/* @ts-expect-error Server Component */}
+            <PhotosSSR />
+          </div>
+        </Suspense>
+        <div>_____________</div>
+        <span>Here is fetching from Server with Streaming</span>
+        <Suspense fallback={<Loading />}>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {/* @ts-expect-error Server Component */}
+            <PhotosSSRDelay />
+          </div>
+        </Suspense>
+        <div>_____________</div>
         <PhotosClientComponent />
       </div>
     </div>

@@ -2,7 +2,10 @@
 
 import React, { Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-
+import dynamic from 'next/dynamic'
+const ThemeSwitch = dynamic(() => import('@/components/theme-switch'), {
+  ssr: false,
+})
 function Params() {
   const searchParams = useSearchParams()!
 
@@ -39,6 +42,7 @@ export function AddressBar() {
   const pathname = usePathname()
   return (
     <div className="flex items-center gap-x-2 p-3.5 lg:px-5 lg:py-3">
+      <ThemeSwitch />
       <div className="text-gray-600">
         <svg
           xmlns="http://www.w3.org/2000/svg"
